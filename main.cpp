@@ -1,8 +1,20 @@
 #include <iostream>
+#include <fstream>
 #include <chrono>
+#include <vector>
+#include <list>
+#include <set>
 using namespace std;
+using namespace std::chrono;
 
 int main() {
+
+    auto start = high_resolution_clock::now();
+    string line;
+    vector 
+
+    ifstream fin("codes.txt");
+    while (getline(fin, line))
     
 
     return 0;
