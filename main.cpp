@@ -10,13 +10,14 @@ using namespace std::chrono;
 
 int main() {
     string line;
+    int numline = 0;
 
 
     ifstream fin("codes.txt");
-
     auto start1 = high_resolution_clock::now();
     vector <string> randomIDs_vector;
     while (getline(fin, line))
+        numline++;
         randomIDs_vector.push_back(line);
     auto end1 = high_resolution_clock::now();
     auto duration1 = duration_cast<milliseconds>(end1-start1);
@@ -53,13 +54,15 @@ int main() {
     auto duration5 = duration_cast<milliseconds>(end5-start5);
     cout << "Sort codes in the list: " << duration5.count() << " milliseconds\n";
 
-    auto start6 = high_resolution_clock::now();
-    bool 
-    randomIDs_set
-    auto end6 = high_resolution_clock::now();
-    auto duration6 = duration_cast<milliseconds>(end6-start6);
-    cout << "Sort codes in the set: " << duration6.count() << " milliseconds\n";
+    cout << "Sort codes in the set: " << duration3.count() << " milliseconds\n";
+
+    cout << "--------------------- INSERTING-------------------------------\n";
     
+    auto start7 = high_resolution_clock::now();
+    randomIDs_vector.insert(randomIDs_vector.begin() + numline/2,0,"TESTCODE");
+    auto end7 = high_resolution_clock::now();
+    auto duration7 = duration_cast<milliseconds>(end7-start7);
+    cout << "Insert TESTCODE in the vector: " << duration7.count() << " milliseconds\n";
     return 0;
 }
 
