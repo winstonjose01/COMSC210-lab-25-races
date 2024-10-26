@@ -5,6 +5,7 @@
 #include <list>
 #include <set>
 #include <algorithm>
+#include <iomanip>
 using namespace std;
 using namespace std::chrono;
 
@@ -61,8 +62,24 @@ int main() {
     auto start7 = high_resolution_clock::now();
     randomIDs_vector.insert(randomIDs_vector.begin() + numline/2,0,"TESTCODE");
     auto end7 = high_resolution_clock::now();
-    auto duration7 = duration_cast<milliseconds>(end7-start7);
-    cout << "Insert TESTCODE in the vector: " << duration7.count() << " milliseconds\n";
+    auto duration7 = duration_cast<microseconds>(end7-start7);
+    cout << "Insert TESTCODE into the vector: " << fixed << setprecision(3) << duration7.count()/1000.0 << " milliseconds\n";
+
+    auto start8 = high_resolution_clock::now();
+    auto it_list = randomIDs_list.begin();
+    advance(it_list,numline);
+    randomIDs_list.insert(it_list,"TESTCODE");
+    auto end8 = high_resolution_clock::now();
+    auto duration8 = duration_cast<microseconds>(end8-start8);
+    cout << "Insert TESTCODE into the list: " << fixed << setprecision(3) << duration8.count()/1000.0 << " milliseconds\n";
+
+    
+    auto start9 = high_resolution_clock::now();
+    randomIDs_set.insert("TESTCODE");
+    auto end9 = high_resolution_clock::now();
+    auto duration9 = duration_cast<microseconds>(end9-start9);
+    cout << "Insert TESTCODE into the list: " << fixed << setprecision(3) << duration9.count()/1000.0 << " milliseconds\n";
+
     return 0;
 }
 
