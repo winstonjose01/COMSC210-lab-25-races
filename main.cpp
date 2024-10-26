@@ -15,7 +15,7 @@ int main() {
     ifstream fin("codes.txt");
 
     // ------------------------ READING -------------------------------
-
+    // Vector
     auto start1 = high_resolution_clock::now();
     vector <string> randomIDs_vector;
     while (getline(fin, line)){
@@ -25,8 +25,7 @@ int main() {
     fin.clear();
     auto end1 = high_resolution_clock::now();
     auto duration1 = duration_cast<microseconds>(end1-start1).count()/1000.0;
-    
-
+    // List
     auto start2 = high_resolution_clock::now();
     list<string> randomIDs_list;
     while (getline(fin, line)){
@@ -34,10 +33,8 @@ int main() {
     }
     fin.clear();
     auto end2 = high_resolution_clock::now();
-    auto duration2 = duration_cast<microseconds>(end2-start2);
-    cout << "Reading codes into a list: " << duration2.count()/1000.0 << " milliseconds\n";
-
-    
+    auto duration2 = duration_cast<microseconds>(end2-start2).count()/1000.0;
+    // Set
     auto start3 = high_resolution_clock::now();
     set<string> randomIDs_set;
     while (getline(fin, line)){
@@ -45,24 +42,21 @@ int main() {
     }
     fin.clear();
     auto end3 = high_resolution_clock::now();
-    auto duration3 = duration_cast<microseconds>(end3-start3);
-    cout << "Reading codes into a set: " << duration3.count()/1000.0 << " milliseconds\n";
+    auto duration3 = duration_cast<microseconds>(end3-start3).count()/1000.0;
 
     // ------------------------ SORTING -------------------------------
-
+    // Vector
     auto start4 = high_resolution_clock::now();
     sort(randomIDs_vector.begin(), randomIDs_vector.end());
     auto end4 = high_resolution_clock::now();
-    auto duration4 = duration_cast<microseconds>(end4-start4);
-    cout << "Sort codes in the vector: " << fixed << setprecision(3) << duration4.count()/1000.0 << " milliseconds\n";
-
+    auto duration4 = duration_cast<microseconds>(end4-start4).count()/1000.0;
+    // List
     auto start5 = high_resolution_clock::now();
     randomIDs_list.sort();
     auto end5 = high_resolution_clock::now();
-    auto duration5 = duration_cast<microseconds>(end5-start5);
-    cout << "Sort codes in the list: " << fixed << setprecision(3) << duration5.count()/1000.0 << " milliseconds\n";
-
-    cout << "Sort codes in the set: " <<fixed << setprecision(3)<< duration3.count()/1000.0 << " milliseconds\n";
+    auto duration5 = duration_cast<microseconds>(end5-start5).count()/1000.0;
+    
+    // Set - Sorting set automatically happens when the elements are read into the set.
 
     // ------------------------ INSERTING -------------------------------
     
@@ -112,7 +106,8 @@ int main() {
     cout << "Deleting element from the middle of the set: " << fixed << setprecision(3) << duration12.count()/1000.0 << " milliseconds\n";
 
     cout << setw(12) << "Operation" << setw(10) << "Vector" << setw(10) << "List" << setw(10) << "Set" << endl;
-    cout << setw(12) <<  right << "Reading" << setw(10) << duration1;
+    cout << setw(12) <<  right << "Reading" << setw(10) << right << duration1 << setw(10) << right << duration2 << setw(10) << right << duration3 << endl;
+    cout << setw(12) <<  right << "Sorting" << setw(10) << right << duration4 << setw(10) << right << duration5 << setw(10) << right << duration3 << endl;
 
     return 0;
 }
