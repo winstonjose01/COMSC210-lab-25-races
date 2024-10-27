@@ -4,6 +4,7 @@
         "iostream": "cpp",
         "algorithm": "cpp",
         "format": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "type_traits": "cpp"
     }
 }

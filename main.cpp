@@ -15,6 +15,12 @@ using namespace std::chrono;
 
 template <typename Container>
 void reading (ifstream &, Container &);
+template <typename Container>
+void sorting (Container &);
+template<typename Container>
+void inserting (Container &, int);
+template<typename Container>
+void deleting (Container &, int);
 
 int main() {
     string line;
@@ -24,6 +30,13 @@ int main() {
         cout << "Error opening file. Aborting!";            
         return(1);    
     }
+    else {
+        while (getline(fin, line)){
+            numline++;
+            }
+    }
+    fin.clear();
+    fin.seekg(0);
 
     // ------------------------ READING -------------------------------
     // Vector
@@ -40,31 +53,35 @@ int main() {
     // List
     auto start2 = high_resolution_clock::now();         // Start timing for list reading
     list<string> randomIDs_list;                        // Create list to store lines from the file
-    while (getline(fin, line)){                         // Read lines until EOF
-        randomIDs_list.push_back(line);                 // Add line to the list
-    }
-    fin.clear();                                        // Clear the filstream
+    //while (getline(fin, line)){                         // Read lines until EOF
+        //randomIDs_list.push_back(line);                 // Add line to the list
+    //}
+    //fin.clear();
+    reading(fin, randomIDs_list);                                       // Clear the filstream
     auto end2 = high_resolution_clock::now();           // End timing for list reading
     auto duration2 = duration_cast<microseconds>(end2-start2).count()/1000.0; // Calculate the duration in milliseconds
     // Set
     auto start3 = high_resolution_clock::now();         // Start timing for set reading 
     set<string> randomIDs_set;                          // Create set to store lines from the file   
-    while (getline(fin, line)){                         // Read lines until EOF
-        randomIDs_set.emplace(line);                    // Add line to the set
-    }
-    fin.clear();                                        // Clear the filestream
+    //while (getline(fin, line)){                         // Read lines until EOF
+        //randomIDs_set.emplace(line);                    // Add line to the set
+    //}
+    //fin.clear();                                        // Clear the filestream
+    reading(fin,randomIDs_set);
     auto end3 = high_resolution_clock::now();           // End timing for set reading
     auto duration3 = duration_cast<microseconds>(end3-start3).count()/1000.0; // Calculate the duration in milliseconds
 
     // ------------------------ SORTING -------------------------------
     // Vector   
     auto start4 = high_resolution_clock::now();         // Start timing for vector sorting
-    sort(randomIDs_vector.begin(), randomIDs_vector.end()); // Sort the vector
+    //sort(randomIDs_vector.begin(), randomIDs_vector.end()); // Sort the vector
+    sorting (randomIDs_vector);
     auto end4 = high_resolution_clock::now();               // End timing for vector sorting
     auto duration4 = duration_cast<microseconds>(end4-start4).count()/1000.0; // Calculate the duration in milliseconds
     // List
     auto start5 = high_resolution_clock::now();         // Start timing for list sorting
-    randomIDs_list.sort();                              // Sort the list
+    //randomIDs_list.sort();                              // Sort the list
+    sorting (randomIDs_list);
     auto end5 = high_resolution_clock::now();           // End timing for list sorting
     auto duration5 = duration_cast<microseconds>(end5-start5).count()/1000.0; // Calculate the duration in milliseconds
     
@@ -73,34 +90,39 @@ int main() {
     // ------------------------ INSERTING -------------------------------
     
     auto start7 = high_resolution_clock::now();         // Start timing for vector insertion
-    randomIDs_vector.insert(randomIDs_vector.begin() + numline/2,"TESTCODE"); // Insert "TESTCODE" in the middle of the vector
+    //randomIDs_vector.insert(randomIDs_vector.begin() + numline/2,"TESTCODE"); // Insert "TESTCODE" in the middle of the vector
+    inserting(randomIDs_vector,numline);
     auto end7 = high_resolution_clock::now();           // End timing for vector insertion
     auto duration7 = duration_cast<microseconds>(end7-start7).count()/1000.0; // Calculate the duration in milliseconds
 
     auto start8 = high_resolution_clock::now();         // Start timing for list insertion
-    auto it_list = randomIDs_list.begin();              // Create iterator and position at the beginning of the list
-    advance(it_list,numline/2);                         // Advance iterator to the middle of the list
-    randomIDs_list.insert(it_list,"TESTCODE");          // Insert string "TESTCODE"
+    //auto it_list = randomIDs_list.begin();              // Create iterator and position at the beginning of the list
+    //advance(it_list,numline/2);                         // Advance iterator to the middle of the list
+    //randomIDs_list.insert(it_list,"TESTCODE");          // Insert string "TESTCODE"
+    inserting(randomIDs_list, numline);
     auto end8 = high_resolution_clock::now();           // End timing for list insertion
     auto duration8 = duration_cast<microseconds>(end8-start8).count()/1000.0; // Calculate the duration in milliseconds
 
     
     auto start9 = high_resolution_clock::now();         // Start timing for set insertion
-    randomIDs_set.insert("TESTCODE");                   // Insert "TESTCODE" 
+    //randomIDs_set.insert("TESTCODE");                   // Insert "TESTCODE" 
+    inserting(randomIDs_set, numline);
     auto end9 = high_resolution_clock::now();           // End timing for set insertion
     auto duration9 = duration_cast<microseconds>(end9-start9).count()/1000.0; // Calculate the duration in milliseconds
 
     // ------------------------ DELETING -------------------------------
 
     auto start10 = high_resolution_clock::now();        // Start timing for vector deletion
-    randomIDs_vector.erase(randomIDs_vector.begin() + numline /2); // Delete element at index numline/2
+    //randomIDs_vector.erase(randomIDs_vector.begin() + numline /2); // Delete element at index numline/2
+    deleting(randomIDs_vector,numline);
     auto end10 = high_resolution_clock::now();          // End timing for vector deletion
     auto duration10 = duration_cast<microseconds>(end10-start10).count()/1000.0; // Calculate the duration in milliseconds
 
     auto start11 = high_resolution_clock::now();        // Start timing for list deletion       
-    it_list = randomIDs_list.begin();                   // Reset list iterator to the beginning of the list 
-    advance(it_list,numline/2);                         // Advance iterator to middle of the list
-    randomIDs_list.erase(it_list);                      // Delete element at indext numline/2
+    //it_list = randomIDs_list.begin();                   // Reset list iterator to the beginning of the list 
+    //advance(it_list,numline/2);                         // Advance iterator to middle of the list
+    //randomIDs_list.erase(it_list);                      // Delete element at indext numline/2
+    deleting(randomIDs_list, numline);
     auto end11 = high_resolution_clock::now();          // End timing for list deletion
     auto duration11 = duration_cast<microseconds>(end11-start11).count()/1000.0; // Calculate the duration in milliseconds
 
@@ -138,8 +160,51 @@ void reading (ifstream &f, Container &coll){
     }
 
 }
+
+template <typename Container>
+void sorting (Container &coll){
+    if constexpr(is_same_v<Container,vector<string>>){
+        sort(coll.begin(),coll.end());
+    } 
+    else if constexpr(is_same_v<Container,list<string>>){
+        coll.sort();
+    }
     
 
+}
+
+template <typename Container>
+void inserting (Container &coll, int x){
+    if constexpr(is_same_v<Container,vector<string>>){
+        coll.erase(coll.begin() + x/2); 
+    }    
+    else if constexpr(is_same_v<Container,list<string>>){
+        auto it_list = coll.begin();              // Create iterator and position at the beginning of the list
+        advance(it_list,x/2);                         // Advance iterator to the middle of the list
+        coll.erase(it_list);  
+    }
+    else if constexpr(is_same_v<Container, set<string>>){
+        auto it_set = coll.begin();                // Create iterator and initialize at the beginning of the set
+        advance(it_set,x/2);                  // Advance iterator to middle of the list
+        coll.erase(it_set);                        // Delete element at indext numline/2
+    }
+}
+    
+
+template <typename Container>
+void deleting (Container &coll, int x){
+    if constexpr(is_same_v<Container,vector<string>>){
+        coll.insert(coll.begin() + x/2,"TESTCODE"); 
+    }    
+    else if constexpr(is_same_v<Container,list<string>>){
+        auto it_list = coll.begin();              // Create iterator and position at the beginning of the list
+        advance(it_list,x/2);                         // Advance iterator to the middle of the list
+        coll.insert(it_list,"TESTCODE");  
+    }
+    else if constexpr(is_same_v<Container, set<string>>){
+        coll.insert("TESTCODE");
+    }
+}
 
 
 /* syntax examples:
